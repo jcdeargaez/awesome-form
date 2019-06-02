@@ -1,0 +1,45 @@
+<h1>Awesome Form</h1>
+
+{% if success_message %}
+    <strong style="color:green">{{ success_message }}</strong>
+{% elif error_message %}
+    <strong style="color:red">{{ error_message }}</strong>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" maxlength="50" required />
+    </p>
+
+    <p>
+        <label for="color">Favorite Color:</label>
+        <input type="color" id="color" name="color" />
+    </p>
+
+    <p>
+        Pet: &nbsp;
+        <input type="radio" name="pet" id="cats" value="1" checked />
+        <label for="cats">Cats</label>
+        <input type="radio" name="pet" id="dogs" value="2" />
+        <label for="dogs">Dogs</label>
+    </p>
+
+    <button type="submit">Submit</button>
+</form>
+
+{% if entries %}
+    <h2>Latest Entries</h2>
+    {% for entry in entries %}
+        <p style="color:{{entry.color}}">
+            ID: {{ entry.id }} - Name: {{ entry.name }} - Favorite Color: {{ entry.color }} - Pet:
+            {% if entry.pet == 1 %}
+                Cats
+            {% else %}
+                Dogs
+            {% endif %}
+        </p>
+    {% endfor %}
+{% endif %}
